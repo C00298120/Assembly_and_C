@@ -1,0 +1,34 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 17/01/2025 10:15:50
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :part2
+00000000                             3  * Written by :C00298120 Lloyd
+00000000                             4  * Date       :17/01/25
+00000000                             5  * Description:
+00000000                             6  *-----------------------------------------------------------
+00001000                             7      ORG    $1000
+00001000                             8  START:                  
+00001000  123C 0064                  9      MOVE.B #$64,D1
+00001004  43F9 0000101A             10      LEA text, A1
+0000100A  303C 000E                 11      MOVE #14,D0
+0000100E  4E4F                      12      TRAP #15
+00001010                            13      
+00001010  303C 0003                 14      MOVE #3,D0
+00001014  4E4F                      15      TRAP #15
+00001016  FFFF FFFF                 16      SIMHALT             
+0000101A                            17  
+0000101A= 44 61 74 61 20 52 ...     18  text    dc.b 'Data Register: ',0
+0000102A                            19  
+0000102A                            20      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+START               1000
+TEXT                101A
