@@ -1,0 +1,52 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 04/02/2025 12:01:00
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :
+00000000                             3  * Written by :
+00000000                             4  * Date       :
+00000000                             5  * Description:
+00000000                             6  *-----------------------------------------------------------
+00001000                             7      ORG    $1000
+00001000                             8  START:
+00001000                             9      ;MOVE HEALTH TO MEMORY LOCATION $3000
+00001000  11FC 0064 3000            10      MOVE.B  #100,   $3000
+00001006                            11      
+00001006                            12      ;MOVE LOCATION OF PLAYER INTO DATA REGISTER
+00001006                            13      ;X FIRST BYTE 0 TO 15
+00001006                            14      ;Y SECOND BYTE 0 TO 15
+00001006  143C 0012                 15      MOVE.B  #$12,   D2
+0000100A                            16      
+0000100A                            17      ;MOVE LOCATION OF NPC INTO DATA REGISTER
+0000100A                            18      ;X FIRST BYTE 0 TO 15
+0000100A                            19      ;Y SECOND BYTE 0 TO 15
+0000100A  163C 0016                 20      MOVE.B  #22,    D3
+0000100E                            21      
+0000100E                            22      ;BITWISE AND D2 and D3
+0000100E                            23      ;WHATS NEW LOACTION OF PLAYER 
+0000100E  C602                      24      AND.B   D2, D3
+00001010                            25      
+00001010                            26      ;LOAD MEMORY ADDRESS $3000 INTO
+00001010                            27      ;ADDRESS REGISTER A1
+00001010  43F8 3000                 28      LEA $3000,  A1
+00001014                            29      
+00001014                            30      ;HIT BY NPC
+00001014  0411 0014                 31      SUB.B   #20,    (A1)
+00001018                            32      
+00001018                            33      ;PICK UP HEALTH FOUND
+00001018  0611 000A                 34      ADD.B   #10,    (A1)
+0000101C  FFFF FFFF                 35      SIMHALT             ; halt simulator
+00001020                            36  
+00001020                            37  * Put variables and constants here
+00001020                            38  
+00001020                            39      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+START               1000
