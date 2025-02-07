@@ -1,0 +1,65 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 07/02/2025 09:16:06
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :
+00000000                             3  * Written by :
+00000000                             4  * Date       :
+00000000                             5  * Description:
+00000000                             6  *-----------------------------------------------------------
+00001000                             7      ORG    $1000
+00001000                             8  START:
+00001000  11FC 0064 3000             9      MOVE.B #100,    $3000
+00001006                            10      
+00001006                            11      ;MOVE LOCATION OF PLAYER INTO DATA REGISTER
+00001006                            12      ;X FIRST BYTE 0 TO 15
+00001006                            13      ;Y SECOND BYTE 0 TO 15
+00001006  143C 0012                 14      MOVE.B  #$12,   D2
+0000100A                            15      
+0000100A                            16      ;MOVE LOCATION OF NPC INTO DATA REGISTER
+0000100A                            17      ;X FIRST BYTE 0 TO 15
+0000100A                            18      ;Y SECOND BYTE 0 TO 15
+0000100A  163C 0016                 19      MOVE.B  #22,    D3
+0000100E                            20      
+0000100E                            21      ;BITWISE AND D2 and D3
+0000100E                            22      ;WHATS NEW LOACTION OF PLAYER 
+0000100E  C602                      23      AND.B   D2, D3
+00001010                            24      
+00001010  6100 000A                 25      BSR     BOSS_HIT
+00001014                            26      
+00001014                            27      BACK_IN_THE_GAME:
+00001014  6100 000C                 28      BSR     HEALTH_PICKUP
+00001018  6000 000E                 29      BRA     GAME_END
+0000101C                            30      
+0000101C                            31      BOSS_HIT:
+0000101C  0411 001E                 32      SUB.B   #30,    (A1)
+00001020  60F2                      33      BRA     BACK_IN_THE_GAME
+00001022                            34      
+00001022                            35      HEALTH_PICKUP:
+00001022  0611 0014                 36      ADD.B   #20,    (A1)
+00001026  4E75                      37      RTS
+00001028                            38      
+00001028                            39      GAME_END:
+00001028  12BC 0000                 40      MOVE.B  #$00,   (A1)
+0000102C                            41  
+0000102C                            42      
+0000102C  43F8 3000                 43      LEA $3000,  A1
+00001030  FFFF FFFF                 44      SIMHALT             ; halt simulator
+00001034                            45  
+00001034                            46  * Put variables and constants here
+00001034                            47  
+00001034                            48      END    START        ; last line of source
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+BACK_IN_THE_GAME    1014
+BOSS_HIT            101C
+GAME_END            1028
+HEALTH_PICKUP       1022
+START               1000
