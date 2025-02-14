@@ -1,0 +1,56 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 11/02/2025 12:40:54
+
+00000000                             1  
+00001000                             2      ORG     $1000
+00001000                             3  
+00001000                             4  
+00001000                             5  START:
+00001000  43F9 0000103A              6      LEA PLAYER_POSITION, A1
+00001006  45F9 0000103C              7      LEA ENEMY_POSITION, A2
+0000100C                             8  
+0000100C  123C 000A                  9      MOVE.B #10, D1     ; Player X position
+00001010  143C 000F                 10      MOVE.B #15, D2     ; Player Y position
+00001014  163C 0032                 11      MOVE.B #50, D3     ; Enemy X position
+00001018  183C 0037                 12      MOVE.B #55, D4     ; Enemy Y position
+0000101C                            13  
+0000101C                            14  CHECK_COLLISION:
+0000101C  B601                      15      CMP.B D1, D3       ; Compare X positions
+0000101E  6600 000C                 16      BNE NEXT_MOVE      ; If not equal, move player
+00001022                            17  
+00001022  B802                      18      CMP.B D2, D4       ; Compare Y positions
+00001024  6600 0006                 19      BNE NEXT_MOVE      ; If not equal, move player
+00001028                            20  
+00001028  6000 0008                 21      BRA COLLISION      ; If both match, jump to COLLISION
+0000102C                            22  
+0000102C                            23  NEXT_MOVE:
+0000102C  5201                      24      ADD.B #1, D1       ; Move Player X coordinate right
+0000102E  5202                      25      ADD.B #1, D2       ; Move Player Y coordinate down
+00001030  60EA                      26      BRA CHECK_COLLISION
+00001032                            27  
+00001032                            28  COLLISION:
+00001032  6000 0002                 29      BRA GAME_OVER      ; Collision detected, go to GAME_OVER
+00001036                            30  
+00001036                            31  GAME_OVER:
+00001036  FFFF FFFF                 32      SIMHALT            ; Stop execution
+0000103A                            33  
+0000103A= 0A 0F                     34  PLAYER_POSITION:  DC.B 10, 15
+0000103C= 32 37                     35  ENEMY_POSITION:   DC.B 50, 55
+0000103E                            36  
+0000103E                            37      END START
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+CHECK_COLLISION     101C
+COLLISION           1032
+ENEMY_POSITION      103C
+GAME_OVER           1036
+NEXT_MOVE           102C
+PLAYER_POSITION     103A
+START               1000
