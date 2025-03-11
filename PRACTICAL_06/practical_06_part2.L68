@@ -1,0 +1,138 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 11/03/2025 10:58:11
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      : Complete Trap Task Example
+00000000                             3  * Written by : Your Name
+00000000                             4  * Date       : Today's Date
+00000000                             5  * Description: This program demonstrates all the requested TRAP tasks,
+00000000                             6  *              including displaying strings, reading input,
+00000000                             7  *              handling numbers, and controlling the display.
+00000000                             8  *              Outputs are formatted nicely.
+00000000                             9  *-----------------------------------------------------------
+00001000                            10      ORG    $1000
+00001000                            11  START:
+00001000                            12      ; Task 13: Display welcome message with CR, LF
+00001000  43F9 000010EA             13      LEA     WELCOME_MSG, A1       ; Load address of welcome message into A1
+00001006  103C 000D                 14      MOVE.B  #13, D0               ; Task 13: Display string with CR, LF
+0000100A  4E4F                      15      TRAP    #15                   ; Execute TRAP task
+0000100C                            16  
+0000100C                            17      ; Task 2: Read string from keyboard (max 80 chars)
+0000100C  43F9 0000111D             18      LEA     INPUT_STRING_MSG, A1  ; Load address of "Enter string" message
+00001012  103C 000D                 19      MOVE.B  #13, D0               ; Task 13: Display string with CR, LF
+00001016  4E4F                      20      TRAP    #15                   ; Execute TRAP task
+00001018  43F9 000011E8             21      LEA     INPUT_BUFFER, A1      ; Load address of input buffer into A1
+0000101E  103C 0002                 22      MOVE.B  #2, D0                ; Task 2: Read string from keyboard
+00001022  4E4F                      23      TRAP    #15                   ; Execute TRAP task
+00001024                            24  
+00001024                            25      ; Task 14: Display the input string with CR, LF
+00001024  43F9 0000113D             26      LEA     DISPLAY_STRING_MSG, A1 ; Load address of "Display string" message
+0000102A  103C 000D                 27      MOVE.B  #13, D0               ; Task 13: Display string with CR, LF
+0000102E  4E4F                      28      TRAP    #15                   ; Execute TRAP task
+00001030  43F9 000011E8             29      LEA     INPUT_BUFFER, A1      ; Load address of input buffer into A1
+00001036  103C 000E                 30      MOVE.B  #14, D0               ; Task 14: Display string without CR, LF
+0000103A  4E4F                      31      TRAP    #15                   ; Execute TRAP task
+0000103C  103C 000D                 32      MOVE.B  #13, D0               ; Task 13: Display CR, LF for new line
+00001040  4E4F                      33      TRAP    #15                   ; Execute TRAP task
+00001042                            34  
+00001042                            35      ; Task 4: Read a number from the keyboard into D1.L
+00001042  43F9 0000114B             36      LEA     ENTER_NUM_MSG, A1     ; Load address of "Enter number" message
+00001048  103C 000D                 37      MOVE.B  #13, D0               ; Task 13: Display string with CR, LF
+0000104C  4E4F                      38      TRAP    #15                   ; Execute TRAP task
+0000104E  103C 0004                 39      MOVE.B  #4, D0                ; Task 4: Read a number into D1.L
+00001052  4E4F                      40      TRAP    #15                   ; Execute TRAP task
+00001054                            41  
+00001054                            42      ; Task 3: Display the signed number in D1.L in decimal
+00001054  43F9 0000115C             43      LEA     DISPLAY_NUM_MSG, A1   ; Load address of "Display number" message
+0000105A  103C 000D                 44      MOVE.B  #13, D0               ; Task 13: Display string with CR, LF
+0000105E  4E4F                      45      TRAP    #15                   ; Execute TRAP task
+00001060  103C 0003                 46      MOVE.B  #3, D0                ; Task 3: Display signed number in D1.L
+00001064  4E4F                      47      TRAP    #15                   ; Execute TRAP task
+00001066  103C 000D                 48      MOVE.B  #13, D0               ; Task 13: Display CR, LF for new line
+0000106A  4E4F                      49      TRAP    #15                   ; Execute TRAP task
+0000106C                            50  
+0000106C                            51      ; Task 5: Read a single character from the keyboard into D1.B
+0000106C  43F9 0000116C             52      LEA     ENTER_CHAR_MSG, A1    ; Load address of "Enter character" message
+00001072  103C 000D                 53      MOVE.B  #13, D0               ; Task 13: Display string with CR, LF
+00001076  4E4F                      54      TRAP    #15                   ; Execute TRAP task
+00001078                            55  
+00001078                            56      ; Read a single character (Task 5)
+00001078  103C 0005                 57      MOVE.B  #5, D0                ; Task 5: Read single character into D1.B
+0000107C  4E4F                      58      TRAP    #15                   ; Execute TRAP task
+0000107E                            59  
+0000107E                            60      ; Task 6: Display the single character in D1.B
+0000107E  43F9 00001180             61      LEA     DISPLAY_CHAR_MSG, A1  ; Load address of "Display character" message
+00001084  103C 000D                 62      MOVE.B  #13, D0               ; Task 13: Display string with CR, LF
+00001088  4E4F                      63      TRAP    #15                   ; Execute TRAP task
+0000108A  103C 0006                 64      MOVE.B  #6, D0                ; Task 6: Display single character in D1.B
+0000108E  4E4F                      65      TRAP    #15                   ; Execute TRAP task
+00001090  103C 000D                 66      MOVE.B  #13, D0               ; Task 13: Display CR, LF for new line
+00001094  4E4F                      67      TRAP    #15                   ; Execute TRAP task
+00001096                            68  
+00001096                            69      ; Task 7: Check if keyboard input is pending (silently)
+00001096  103C 0007                 70      MOVE.B  #7, D0                ; Task 7: Check if keyboard input is pending
+0000109A  4E4F                      71      TRAP    #15                   ; Execute TRAP task
+0000109C  13C1 00001239             72      MOVE.B  D1, OUTPUT_BYTE       ; Store result in OUTPUT_BYTE (no display)
+000010A2                            73  
+000010A2                            74      ; Task 8: Return time in hundredths of a second since midnight in D1.L
+000010A2  43F9 00001193             75      LEA     TIME_MSG, A1          ; Load address of "Time" message
+000010A8  103C 000D                 76      MOVE.B  #13, D0               ; Task 13: Display string with CR, LF
+000010AC  4E4F                      77      TRAP    #15                   ; Execute TRAP task
+000010AE  103C 0008                 78      MOVE.B  #8, D0                ; Task 8: Get time in hundredths of a second
+000010B2  4E4F                      79      TRAP    #15                   ; Execute TRAP task
+000010B4  23C1 0000123A             80      MOVE.L  D1, OUTPUT_LONG       ; Store result in OUTPUT_LONG
+000010BA  43F9 000011CA             81      LEA     TIME_VALUE_MSG, A1    ; Load address of "Time value" message
+000010C0  103C 000E                 82      MOVE.B  #14, D0               ; Task 14: Display string without CR, LF
+000010C4  4E4F                      83      TRAP    #15                   ; Execute TRAP task
+000010C6  2239 0000123A             84      MOVE.L  OUTPUT_LONG, D1       ; Load result into D1
+000010CC  103C 0003                 85      MOVE.B  #3, D0                ; Task 3: Display signed number in D1.L
+000010D0  4E4F                      86      TRAP    #15                   ; Execute TRAP task
+000010D2  103C 000D                 87      MOVE.B  #13, D0               ; Task 13: Display CR, LF for new line
+000010D6  4E4F                      88      TRAP    #15                   ; Execute TRAP task
+000010D8                            89  
+000010D8                            90      ; Task 9: Terminate the program
+000010D8  43F9 000011CB             91      LEA     END_MSG, A1           ; Load address of "End" message
+000010DE  103C 000D                 92      MOVE.B  #13, D0               ; Task 13: Display string with CR, LF
+000010E2  4E4F                      93      TRAP    #15                   ; Execute TRAP task
+000010E4  103C 0009                 94      MOVE.B  #9, D0                ; Task 9: Terminate program
+000010E8  4E4F                      95      TRAP    #15                   ; Execute TRAP task
+000010EA                            96  
+000010EA                            97  * Data Section
+000010EA= 57 65 6C 63 6F 6D ...     98  WELCOME_MSG:      DC.B 'Welcome! This program demonstrates all TRAP tasks.', 0
+0000111D= 45 6E 74 65 72 20 ...     99  INPUT_STRING_MSG: DC.B 'Enter a string (max 80 chars): ', 0
+0000113D= 59 6F 75 20 65 6E ...    100  DISPLAY_STRING_MSG: DC.B 'You entered: ', 0
+0000114B= 45 6E 74 65 72 20 ...    101  ENTER_NUM_MSG:    DC.B 'Enter a number: ', 0
+0000115C= 54 68 65 20 6E 75 ...    102  DISPLAY_NUM_MSG:  DC.B 'The number is: ', 0
+0000116C= 45 6E 74 65 72 20 ...    103  ENTER_CHAR_MSG:   DC.B 'Enter a character: ', 0
+00001180= 54 68 65 20 63 68 ...    104  DISPLAY_CHAR_MSG: DC.B 'The character is: ', 0
+00001193= 43 75 72 72 65 6E ...    105  TIME_MSG:         DC.B 'Current time since midnight (hundredths of a second): ', 0
+000011CA= 00                       106  TIME_VALUE_MSG:   DC.B '', 0  ; Empty message to avoid duplication
+000011CB= 50 72 6F 67 72 61 ...    107  END_MSG:          DC.B 'Program terminated. Goodbye!', 0
+000011E8                           108  INPUT_BUFFER:     DS.B 81         ; Buffer for input string (80 chars + NULL)
+00001239                           109  OUTPUT_BYTE:      DS.B 1          ; Storage for single-byte output
+0000123A                           110  OUTPUT_LONG:      DS.L 1          ; Storage for long-word output
+0000123E                           111  
+0000123E                           112      END START
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+DISPLAY_CHAR_MSG    1180
+DISPLAY_NUM_MSG     115C
+DISPLAY_STRING_MSG  113D
+END_MSG             11CB
+ENTER_CHAR_MSG      116C
+ENTER_NUM_MSG       114B
+INPUT_BUFFER        11E8
+INPUT_STRING_MSG    111D
+OUTPUT_BYTE         1239
+OUTPUT_LONG         123A
+START               1000
+TIME_MSG            1193
+TIME_VALUE_MSG      11CA
+WELCOME_MSG         10EA

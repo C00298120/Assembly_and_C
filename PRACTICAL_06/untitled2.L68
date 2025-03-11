@@ -1,0 +1,105 @@
+00001000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 04/03/2025 12:49:49
+
+00000000                             1  ;-----------------------------------------------------------
+00000000                             2  ; Title      : Comprehensive Trap Task Example
+00000000                             3  ; Written by : Your Name
+00000000                             4  ; Date       : Today's Date
+00000000                             5  ; Description: Demonstrates all Trap tasks in sequence.
+00000000                             6  ;-----------------------------------------------------------
+00001000                             7      ORG    $1000           ; Start of program
+00001000                             8  
+00001000                             9  START:
+00001000                            10      ; Trap 0: Display string with CR, LF
+00001000  43F9 0000107C             11      LEA     STRING1, A1    ; Load address of STRING1 into A1
+00001006  323C 000D                 12      MOVE.W  #LENGTH1, D1   ; Load length of STRING1 into D1.W
+0000100A  103C 0000                 13      MOVE.B  #0, D0         ; Set D0 to 0
+0000100E  4E4F                      14      TRAP    #15            ; Execute Trap 15 with task 0
+00001010                            15  
+00001010                            16      ; Trap 1: Display string without CR, LF
+00001010  43F9 00001089             17      LEA     STRING2, A1    ; Load address of STRING2 into A1
+00001016  323C 0010                 18      MOVE.W  #LENGTH2, D1   ; Load length of STRING2 into D1.W
+0000101A  103C 0001                 19      MOVE.B  #1, D0         ; Set D0 to 1
+0000101E  4E4F                      20      TRAP    #15            ; Execute Trap 15 with task 1
+00001020                            21  
+00001020                            22      ; Trap 2: Read string from keyboard
+00001020  43F9 00001099             23      LEA     INPUT_BUFFER, A1 ; Load address of INPUT_BUFFER into A1
+00001026  103C 0002                 24      MOVE.B  #2, D0         ; Set D0 to 2
+0000102A  4E4F                      25      TRAP    #15            ; Execute Trap 15 with task 2
+0000102C                            26  
+0000102C                            27      ; Show the input string
+0000102C  43F9 00001099             28      LEA     INPUT_BUFFER, A1 ; Load address of INPUT_BUFFER into A1
+00001032  3201                      29      MOVE.W  D1, D1         ; Length of input string is now in D1.W
+00001034  103C 0000                 30      MOVE.B  #0, D0         ; Set D0 to 0 to display with CR, LF
+00001038  4E4F                      31      TRAP    #15            ; Display input string
+0000103A                            32  
+0000103A                            33      ; Trap 3: Display signed number in decimal
+0000103A  223C FFFFCFC7             34      MOVE.L  #-12345, D1    ; Load a signed number into D1.L
+00001040  103C 0003                 35      MOVE.B  #3, D0         ; Set D0 to 3
+00001044  4E4F                      36      TRAP    #15            ; Execute Trap 15 with task 3
+00001046                            37  
+00001046                            38      ; Trap 4: Read a number from the keyboard
+00001046  103C 0004                 39      MOVE.B  #4, D0         ; Set D0 to 4
+0000104A  4E4F                      40      TRAP    #15            ; Execute Trap 15 with task 4
+0000104C                            41      ; D1.L now contains the number entered by the user
+0000104C  2201                      42      MOVE.L  D1, D1         ; Display the entered number
+0000104E  103C 0003                 43      MOVE.B  #3, D0         ; Set D0 to 3 to display in decimal
+00001052  4E4F                      44      TRAP    #15            ; Display the entered number
+00001054                            45  
+00001054                            46      ; Trap 5: Read a single character from the keyboard
+00001054  103C 0005                 47      MOVE.B  #5, D0         ; Set D0 to 5
+00001058  4E4F                      48      TRAP    #15            ; Execute Trap 15 with task 5
+0000105A                            49  
+0000105A                            50      ; Trap 6: Display a single character
+0000105A  1201                      51      MOVE.B  D1, D1         ; Use the character read in Trap 5
+0000105C  103C 0006                 52      MOVE.B  #6, D0         ; Set D0 to 6
+00001060  4E4F                      53      TRAP    #15            ; Execute Trap 15 with task 6
+00001062                            54  
+00001062                            55      ; Trap 7: Check for pending keyboard input
+00001062  103C 0007                 56      MOVE.B  #7, D0         ; Set D0 to 7
+00001066  4E4F                      57      TRAP    #15            ; Execute Trap 15 with task 7
+00001068                            58      ; D1.B = 1 if input is pending, 0 otherwise
+00001068                            59  
+00001068                            60      ; Trap 8: Get time since midnight
+00001068  103C 0008                 61      MOVE.B  #8, D0         ; Set D0 to 8
+0000106C  4E4F                      62      TRAP    #15            ; Execute Trap 15 with task 8
+0000106E                            63      ; D1.L now contains the time in hundredths of a second
+0000106E                            64  
+0000106E                            65      ; Display time since midnight
+0000106E  2201                      66      MOVE.L  D1, D1         ; Display the time
+00001070  103C 0003                 67      MOVE.B  #3, D0         ; Set D0 to 3 to display in decimal
+00001074  4E4F                      68      TRAP    #15            ; Display the time
+00001076                            69  
+00001076                            70      ; Trap 9: Terminate the program
+00001076  103C 0009                 71      MOVE.B  #9, D0         ; Set D0 to 9
+0000107A  4E4F                      72      TRAP    #15            ; Execute Trap 15 with task 9
+0000107C                            73  
+0000107C                            74  END_PROG:
+0000107C                            75      ; End of program
+0000107C                            76  
+0000107C                            77  ; Data Section
+0000107C= 48 45 4C 4C 4F 2C ...     78  STRING1     DC.B    'HELLO, NOTLU', 0  ; Null-terminated string
+00001089  =0000000D                 79  LENGTH1     EQU     *-STRING1           ; Calculate length of STRING1
+00001089                            80  
+00001089= 41 73 73 65 6D 62 ...     81  STRING2     DC.B    'Assembly is fun', 0 ; Null-terminated string
+00001099  =00000010                 82  LENGTH2     EQU     *-STRING2           ; Calculate length of STRING2
+00001099                            83  
+00001099                            84  INPUT_BUFFER DS.B    80                 ; Reserve 80 bytes for input buffer
+000010E9                            85  
+000010E9                            86      END     START                       ; End of program
+
+No errors detected
+No warnings generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+END_PROG            107C
+INPUT_BUFFER        1099
+LENGTH1             D
+LENGTH2             10
+START               1000
+STRING1             107C
+STRING2             1089

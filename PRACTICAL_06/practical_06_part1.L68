@@ -1,0 +1,37 @@
+00000000 Starting Address
+Assembler used: EASy68K Editor/Assembler v5.16.01
+Created On: 04/03/2025 11:28:58
+
+00000000                             1  *-----------------------------------------------------------
+00000000                             2  * Title      :
+00000000                             3  * Written by :
+00000000                             4  * Date       :
+00000000                             5  * Description:
+00000000                             6  *-----------------------------------------------------------
+00001000                             7      ORG    $1000
+00001000                             8  START:
+00001000                             9      
+00001000                            10      ;MOVE TRAP TASK TO D0
+00001000  103C 0002                 11      MOVE.B  #2, D0
+00001004                            12      ; INTERUPT AND TRAP TASK
+00001004  4E4F                      13      TRAP    #15
+00001006                            14      
+00001006  43F9 00001012             15      LEA     MESSAGE,    A1
+0000100C  103C 000D                 16      MOVE.B  #13,    D0
+00001010  4E4F                      17      TRAP    #15
+00001012                            18      
+00001012                            19   END_PROG:
+00001012                            20   
+00001012= 54 52 41 50 20 54 ...     21   MESSAGE: DC.B 'TRAP TASK TEST',    0
+Line 22 WARNING: END directive missing, starting address not set
+
+No errors detected
+1 warning generated
+
+
+SYMBOL TABLE INFORMATION
+Symbol-name         Value
+-------------------------
+END_PROG            1012
+MESSAGE             1012
+START               1000
